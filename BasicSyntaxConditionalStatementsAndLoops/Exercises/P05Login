@@ -1,0 +1,32 @@
+package Exercise_BasicSyntaxConditionalStatmentsAndLoops;
+
+import java.util.Scanner;
+
+public class P05Login {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String userName = scanner.nextLine();
+        String password = "";
+
+        for (int position = userName.length() - 1; position >= 0 ; position--) {
+            char currentSymbol = userName.charAt(position);
+            password = password + currentSymbol;
+        }
+        String enteredPassword = scanner.nextLine();
+        int countFailedTries = 0;
+        while (!enteredPassword.equals(password)) {
+            countFailedTries++;
+            if ( countFailedTries == 4) {
+                System.out.printf("User %s blocked!", userName);
+                break;
+            }
+            System.out.println("Incorrect password. Try again.");
+            enteredPassword = scanner.nextLine();
+
+        }
+        if (password.equals(enteredPassword)) {
+            System.out.printf("User %s logged in.", userName);
+        }
+    }
+}
