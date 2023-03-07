@@ -1,0 +1,15 @@
+package Lab_DataTypesAndVariables;
+
+import java.util.Scanner;
+
+public class P01ConvertMetersToKilometers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        short distanceInMeters = Short.parseShort(scanner.nextLine());
+
+        double distanceInKilometers = distanceInMeters / 1000.0;
+
+        System.out.printf("%.2f", distanceInKilometers);
+    }
+}
