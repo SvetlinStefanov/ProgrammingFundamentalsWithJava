@@ -1,0 +1,20 @@
+package Exercise_DataTypesAndVariables;
+
+import java.util.Scanner;
+
+public class P02SumDigits {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int number = Integer.parseInt(scanner.nextLine());
+
+        int sumDigits = 0;
+
+        while (number > 0) {
+            int lastDigit = number % 10; //вземам последната цифра
+            sumDigits = sumDigits + lastDigit; //сумирам цифрата
+            number = number / 10; //премахвам взетата цифра от числото
+        }
+        System.out.println(sumDigits);
+    }
+}
