@@ -1,0 +1,24 @@
+package Exercises_Arrays;
+
+import java.util.Scanner;
+
+public class P04ArrayRotation {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String input = scanner.nextLine(); // чета елементите
+        String[] array = input.split(" "); // съхранявам елементите в масив, разделени с интервал
+        int countRotations = Integer.parseInt(scanner.nextLine());
+
+        for (int rotation = 1; rotation <= countRotations; rotation++) {
+            String firstElement = array[0]; // вземам първия елемент от масива
+            for (int index = 0; index < array.length - 1; index++) {
+                array[index] = array[index + 1]; // премествам елементите наляво
+            }
+            array[array.length - 1] = firstElement; //поставям първия елеметн на последнот място
+        }
+        for (String element : array) {
+            System.out.print(element + " ");
+        }
+    }
+}
