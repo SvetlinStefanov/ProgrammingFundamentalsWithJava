@@ -1,0 +1,57 @@
+package Exercises_Arrays;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class P10TreasureHunt {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] initialLoot = scanner.nextLine().split("\\|");
+        ArrayList<String> loot = new ArrayList<>();
+        for (String s : initialLoot) {
+            loot.add(s);
+        }
+
+        String command = scanner.nextLine();
+        while (!command.equals("Yohoho!")) {
+            String[] tokens = command.split("\\s+");
+            switch (tokens[0]) {
+                case "Loot":
+                    for (int i = 1; i < tokens.length; i++) {
+                        if (!loot.contains(tokens[i])) {
+                            loot.add(0, tokens[i]);
+                        }
+                    }
+                    break;
+                case "Drop":
+                    int index = Integer.parseInt(tokens[1]);
+                    if (index >= 0 && index < loot.size()) {
+                        String removed = loot.remove(index);
+                        loot.add(removed);
+                    }
+                    break;
+                case "Steal":
+                    int count = Integer.parseInt(tokens[1]);
+                    int start = Math.max(loot.size() - count, 0);
+                    ArrayList<String> stolen = new ArrayList<>(loot.subList(start, loot.size()));
+                    loot.subList(start, loot.size()).clear();
+                    System.out.println(String.join(", ", stolen));
+                    break;
+            }
+
+            command = scanner.nextLine();
+        }
+
+        if (loot.isEmpty()) {
+            System.out.println("Failed treasure hunt.");
+        } else {
+            int totalLength = 0;
+            for (String s : loot) {
+                totalLength += s.length();
+            }
+            double averageGain = (double) totalLength / loot.size();
+            System.out.printf("Average treasure gain: %.2f pirate credits.", averageGain);
+        }
+    }
+}
