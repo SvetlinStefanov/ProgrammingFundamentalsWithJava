@@ -1,0 +1,28 @@
+package Exercises_Methods;
+
+import java.util.Scanner;
+
+public class P06MiddleCharacters {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String text = scanner.nextLine();
+
+        printMiddleCharacters(text); //text - е аргумент
+
+    }
+
+    //метод, който принтира средния символ
+    public static void printMiddleCharacters(String text) { //String text - е параметър
+        if (text.length() % 2 != 0) { //нечетна дължина - един среден символ
+            int indexOfMiddleCharacter = text.length() / 2;
+            System.out.println(text.charAt(indexOfMiddleCharacter));
+        } else { //четна дължина - два средни символа
+            int indexOfFirstMiddleCharacter = text.length() / 2 - 1;
+            int indexOfSecondMiddleCharacter = text.length() / 2;
+
+            System.out.print(text.charAt(indexOfFirstMiddleCharacter));
+            System.out.print(text.charAt(indexOfSecondMiddleCharacter));
+        }
+    }
+}
