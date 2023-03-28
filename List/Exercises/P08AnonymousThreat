@@ -1,0 +1,79 @@
+package Exercise_Lists;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class P08AnonymousThreat {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<String> texts = Arrays.stream(scanner.nextLine()
+                        .split("\\s+"))
+                .collect(Collectors.toList());
+
+        String command = scanner.nextLine();
+
+        while (!command.equals("3:1")) {
+
+            if (command.contains("merge")) {
+                int startIndex = Integer.parseInt(command.split(" ")[1]);
+                int endIndex = Integer.parseInt(command.split(" ")[2]);
+
+                if (startIndex < 0) { //проверка дали startIndex е по-малък от 0
+                    startIndex = 0;
+                }
+
+                if (endIndex > texts.size() - 1) { //проверка за endIndex дали е по-голям от дължината на листа
+                    endIndex = texts.size() - 1;
+                }
+                //валидиране на индексите
+                if (startIndex >= 0 && startIndex <= texts.size() - 1 && endIndex >= 0 && endIndex <= texts.size() - 1) {
+
+                    String resultMerge = ""; //резултат от обединението на елементите
+                    for (int index = startIndex; index <= endIndex; index++) {
+                        String current = texts.get(index); //вземам елемента
+                        resultMerge += current; //обединявам елемента
+                    }
+
+                    for (int index = startIndex; index <= endIndex; index++) {
+                        texts.remove(startIndex); //премахвам обединените елементи
+                    }
+
+                    texts.add(startIndex, resultMerge); //добавям обединението на startIndex
+                }
+
+            } else if (command.contains("divide")) {
+                int index = Integer.parseInt(command.split(" ")[1]); //индекса от който вземам елемента, който трябва да деля
+                int parts = Integer.parseInt(command.split(" ")[2]); //брой на частите, на които ще разделя текста
+
+                //валидираме индекса от който ще вземаме текст
+                if (index >= 0 && index <= texts.size() - 1) {
+                    String textForDivide = texts.get(index);
+                    texts.remove(index);
+
+                    int countSymbolsPerPart = textForDivide.length() / parts;
+
+                    int beginIndex = 0; // index в текста за деление
+                    for (int part = 1; part < parts; part++) { //всички равни части без последната
+                        String textPerPart = textForDivide.substring(beginIndex, beginIndex + countSymbolsPerPart);
+                        texts.add(index, textPerPart);
+                        index++; //място на поставяне на разбитата част в главния списък
+                        beginIndex += countSymbolsPerPart;
+                    }
+
+                    String textLastParts = textForDivide.substring(beginIndex, textForDivide.length());
+                    texts.add(index, textLastParts);
+                }
+            }
+
+            command = scanner.nextLine();
+        }
+        //System.out.println(String.join(" ", texts));
+
+        for (String text : texts) {
+            System.out.print(text + " ");
+        }
+    }
+}
