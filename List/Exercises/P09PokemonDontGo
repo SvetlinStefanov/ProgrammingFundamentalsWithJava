@@ -1,0 +1,60 @@
+package Exercise_Lists;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class P09PokemonDontGo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> numbers = Arrays.stream(scanner.nextLine()
+                        .split("\\s+"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        int sumRemovedElements = 0; //сумата на премахнатите елементи
+
+        while (numbers.size() > 0) {
+            int index = Integer.parseInt(scanner.nextLine());
+
+            if (index < 0) {
+                int firstElement = numbers.get(0); //вземам първия елемент в списъка
+                numbers.remove(0); // премахвам елемента от първото място
+                sumRemovedElements += firstElement; //сумирам премахнатия елемент с първия елемент
+                int lastElement = numbers.get(numbers.size() - 1); //вземам последния елемент от списъка
+                numbers.add(0, lastElement); //слагам последния елемент на първо място
+                modifyList(numbers, firstElement); //модифицирам списъка спрямо прехнатия първи елемент
+
+            } else if (index > numbers.size() - 1) {
+                int lastElement = numbers.get(numbers.size() - 1); //вземам последния елемент от списъка
+                numbers.remove(numbers.size() - 1); //премахвам последния елемент от списъка
+                sumRemovedElements += lastElement; // сумирам премахнатия елемент с последния елемент
+                int firstElement = numbers.get(0); //вземам първия елемент
+                numbers.add(firstElement); //слагам първия елемент на последно място
+                modifyList(numbers, lastElement); //модифицирам списъка спрямо преммахнатия елемент
+
+            } else if (index >= 0 && index <= numbers.size() - 1) {
+                int removedNumber = numbers.get(index); //вземам елемента на дадения индекс
+                sumRemovedElements += removedNumber; //сумирам премахнатия елементи с числото от валиден индекс
+                numbers.remove(index); // премахвам елемента на дадения индекс
+
+                modifyList(numbers, removedNumber); //модифицирам списъка спрямо прехнатото число
+            }
+        }
+        System.out.println(sumRemovedElements);
+    }
+
+    public static void modifyList(List<Integer> numbers, int removedNumber) {
+        for (int index = 0; index <= numbers.size() - 1; index++) {
+            int currentElement = numbers.get(index); //текущ елемент
+            if (currentElement <= removedNumber) {
+                currentElement += removedNumber;
+            } else {
+                currentElement -= removedNumber;
+            }
+            numbers.set(index, currentElement);
+        }
+    }
+}
