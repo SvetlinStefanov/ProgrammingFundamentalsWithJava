@@ -1,0 +1,51 @@
+package MidExamPrep;
+
+import java.util.Scanner;
+
+public class P02TheLiftSecondSolution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        int people = Integer.parseInt(scanner.nextLine());
+        String[] wagons = scanner.nextLine().split(" ");
+
+        for (int i = 0; i < wagons.length; i++) {
+            int spotsLeft = 4 - Integer.parseInt(wagons[i]);
+
+            while (spotsLeft > 0 && people > 0) {
+                spotsLeft--;
+                people--;
+                wagons[i] = Integer.toString(Integer.parseInt(wagons[i]) + 1);
+            }
+
+            if (people == 0) {
+                break;
+            }
+        }
+
+        boolean isFull = true;
+
+        for (int i = 0; i < wagons.length; i++) {
+
+
+            if (Integer.parseInt(wagons[i]) < 4) {
+                isFull = false;
+            }
+        }
+
+        if (isFull && people == 0) {
+            System.out.println();
+        } else if (isFull && people > 0) {
+            System.out.printf("There isn't enough space! %d people in a queue!%n", people);
+            for (int i = 0; i < wagons.length; i++) {
+                System.out.print(wagons[i] + " ");
+            }
+        } else if (!isFull && people == 0) {
+            System.out.println("The lift has empty spots!");
+            for (int i = 0; i < wagons.length; i++) {
+                System.out.print(wagons[i] + " ");
+            }
+        }
+    }
+}
