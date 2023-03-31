@@ -1,0 +1,38 @@
+package MidExamPrep;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class P03NumbersSecondSolution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        String[] input = scanner.nextLine().split(" ");
+        int[] nums = new int[input.length];
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = Integer.parseInt(input[i]);
+            sum += nums[i];
+        }
+        double average = (double) sum / nums.length;
+
+        List<Integer> topFive = new ArrayList<>();
+        for (int num : nums) {
+            if (num > average) {
+                topFive.add(num);
+            }
+        }
+        Collections.sort(topFive, Collections.reverseOrder());
+
+        if (topFive.isEmpty()) {
+            System.out.println("No");
+        } else {
+            for (int i = 0; i < Math.min(5, topFive.size()); i++) {
+                System.out.print(topFive.get(i) + " ");
+            }
+        }
+    }
+}
