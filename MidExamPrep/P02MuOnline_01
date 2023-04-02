@@ -1,0 +1,54 @@
+package MidExamPrep_2022;
+
+import java.util.Scanner;
+
+public class P02MuOnline_01 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] rooms = scanner.nextLine().split("\\|");
+        int health = 100;
+        int bitcoins = 0;
+        int bestRoom = 0;
+        boolean isDead = false;
+
+        for (int i = 0; i < rooms.length; i++) {
+            String[] room = rooms[i].split(" ");
+            String command = room[0];
+            int amount = Integer.parseInt(room[1]);
+
+            switch (command) {
+                case "potion":
+                    int healed = Math.min(100 - health, amount);
+                    health += healed;
+                    System.out.printf("You healed for %d hp.%n", healed);
+                    System.out.printf("Current health: %d hp.%n", health);
+                    break;
+                case "chest":
+                    bitcoins += amount;
+                    System.out.printf("You found %d bitcoins.%n", amount);
+                    break;
+                default:
+                    health -= amount;
+                    if (health > 0) {
+                        System.out.printf("You slayed %s.%n", command);
+                    } else {
+                        System.out.printf("You died! Killed by %s.%n", command);
+                        System.out.printf("Best room: %d%n", i + 1);
+                        isDead = true;
+                        break;
+                    }
+            }
+            bestRoom = i + 1;
+            if (isDead) {
+                break;
+            }
+        }
+
+        if (!isDead) {
+            System.out.println("You've made it!");
+            System.out.printf("Bitcoins: %d%n", bitcoins);
+            System.out.printf("Health: %d%n", health);
+        }
+    }
+}
