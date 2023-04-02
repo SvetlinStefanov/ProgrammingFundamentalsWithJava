@@ -1,0 +1,62 @@
+package MidExamPrep_2022;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class P03MovingTarget_01 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> targets = new ArrayList<>();
+        String[] inputTargets = scanner.nextLine().split("\\s+");
+        for (String inputTarget : inputTargets) {
+            targets.add(Integer.parseInt(inputTarget));
+        }
+        while (true) {
+            String[] command = scanner.nextLine().split("\\s+");
+            if (command[0].equals("End")) {
+                break;
+            }
+            switch (command[0]) {
+                case "Shoot":
+                    int shootIndex = Integer.parseInt(command[1]);
+                    int power = Integer.parseInt(command[2]);
+                    if (shootIndex >= 0 && shootIndex < targets.size()) {
+                        targets.set(shootIndex, targets.get(shootIndex) - power);
+                        if (targets.get(shootIndex) <= 0) {
+                            targets.remove(shootIndex);
+                        }
+                    }
+                    break;
+                case "Add":
+                    int addIndex = Integer.parseInt(command[1]);
+                    int value = Integer.parseInt(command[2]);
+                    if (addIndex >= 0 && addIndex <= targets.size()) {
+                        targets.add(addIndex, value);
+                    } else {
+                        System.out.println("Invalid placement!");
+                    }
+                    break;
+                case "Strike":
+                    int strikeIndex = Integer.parseInt(command[1]);
+                    int radius = Integer.parseInt(command[2]);
+                    if (strikeIndex - radius < 0 || strikeIndex + radius >= targets.size()) {
+                        System.out.println("Strike missed!");
+                    } else {
+                        for (int i = strikeIndex - radius; i <= strikeIndex + radius; i++) {
+                            targets.remove(strikeIndex - radius);
+                        }
+                    }
+                    break;
+            }
+        }
+        for (int i = 0; i < targets.size(); i++) {
+            if (i == 0) {
+                System.out.print(targets.get(i));
+            } else {
+                System.out.print("|" + targets.get(i));
+            }
+        }
+    }
+}
