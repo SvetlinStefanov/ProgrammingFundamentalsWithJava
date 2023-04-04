@@ -1,0 +1,66 @@
+package MidExam20230219;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class P03ChatLogger {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        List<String> chatHistory = new ArrayList<>();
+
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals("end")) {
+                break;
+            }
+
+            String[] tokens = input.split("\\s+");
+
+            String command = tokens[0];
+
+            switch (command) {
+                case "Chat":
+                    String message = tokens[1];
+                    chatHistory.add(message);
+                    break;
+                case "Delete":
+                    String messageToDelete = tokens[1];
+                    for (int i = 0; i < chatHistory.size(); i++) {
+                        if (chatHistory.get(i).equals(messageToDelete)) {
+                            chatHistory.remove(i);
+                            break;
+                        }
+                    }
+                    break;
+                case "Edit":
+                    String messageToEdit = tokens[1];
+                    String editedVersion = tokens[2];
+                    int messageIndex = chatHistory.indexOf(messageToEdit);
+                    if (messageIndex != -1) {
+                        chatHistory.set(messageIndex, editedVersion);
+                    }
+                    break;
+                case "Pin":
+                    String messageToPin = tokens[1];
+                    if (chatHistory.contains(messageToPin)) {
+                        chatHistory.remove(messageToPin);
+                        chatHistory.add(messageToPin);
+                    }
+                    break;
+                case "Spam":
+                    for (int i = 1; i < tokens.length; i++) {
+                        String spamMessage = tokens[i];
+                        chatHistory.add(spamMessage);
+                    }
+                    break;
+            }
+        }
+
+        for (String message : chatHistory) {
+            System.out.println(message);
+        }
+    }
+}
